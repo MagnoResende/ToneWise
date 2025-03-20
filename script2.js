@@ -30,7 +30,7 @@ document.getElementById('submitBtn').onclick = () => {
     const result = highlightStressSimple(word, phonemes);
     document.getElementById('output').textContent = result;
   } else {
-    document.getElementById('output').textContent = `Sorry, Word "${upperWord}" not found in ToweWise.`;
+    document.getElementById('output').textContent = `Sorry, Word "${upperWord}" not found in ToneWise.`;
   }
 };
 
@@ -40,23 +40,29 @@ document.getElementById('submitBtn').onclick = () => {
 //    "democracy" -> "dem[O]cracy"    (if the phoneme with "1" is at index 3)
 //    "information" -> "inform[A]tion"  (by special override)
 function highlightStressSimple(word, phonemes) {
+  // Convert the input word to lowercase
+  const lowerCaseWord = word.toLowerCase();
+
   // Split the phoneme string by spaces
   const phonemeArray = phonemes.split(' ');
-  
+
   // Find the index of the first phoneme that contains '1'
   let stressIndex = phonemeArray.findIndex(phon => phon.includes('1'));
-  if (stressIndex === -1) return word; // If no primary stress is found, return the original word.
-  
+  if (stressIndex === -1) return lowerCaseWord; // If no primary stress is found, return the word in lowercase.
+
   // Special override for "information" if needed:
-  if (word.toLowerCase() === "information") {
+  if (lowerCaseWord === "information") {
     stressIndex = 6; // Adjust this value as desired.
   }
-  
+
   // If the calculated index is out-of-bounds for the word, just return the word as is.
-  if (stressIndex >= word.length) return word;
-  
+  if (stressIndex >= lowerCaseWord.length) return lowerCaseWord;
+
   // Highlight the letter at the found index:
-  return word.substring(0, stressIndex) + 
-         "[" + word.charAt(stressIndex).toUpperCase() + "]" + 
-         word.substring(stressIndex + 1);
+  return (
+    lowerCaseWord.substring(0, stressIndex) +
+    "[" + lowerCaseWord.charAt(stressIndex).toUpperCase() + "]" +
+    lowerCaseWord.substring(stressIndex + 1)
+  );
 }
+
