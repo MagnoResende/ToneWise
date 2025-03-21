@@ -97,16 +97,16 @@
       <div class="form-row">
         <input type="text" id="wordInput" placeholder="Enter a word" />
         <button type="submit" id="submitBtn">Submit</button>
+        <span id="pronounceIcon" style="cursor: pointer; font-size: 1.5rem;">🔊</span>
       </div>
+      
+      
       <!-- Second row: output (displayed below the input row) -->
       <div class="form-row">
         <span id="output"></span>
       </div>
     </form>
   </div>
-  
-  <!-- Include your updated script (renamed if needed) -->
-  <script src="script2.js"></script>
   
   <!-- Script to handle form submission with Enter key -->
   <script>
@@ -115,5 +115,8 @@
       document.getElementById('submitBtn').click();
     });
   </script>
+
+  <!-- Include your updated script -->
+  <script src="script2.js"></script>
 </body>
 </html>
