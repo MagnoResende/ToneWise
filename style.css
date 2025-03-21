@@ -7,11 +7,30 @@ body {
 
 input, button {
     font-size: 16px;
-    margin: 10px;
+    margin: 10px; /* Keeps consistent margin for inputs and buttons */
     padding: 5px;
 }
 
 #output {
     font-weight: bold;
     color: #4caf50;
+}
+
+/* New styles for spacing and the emoji */
+.form-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Adds space between elements in the row */
+}
+
+#pronounceIcon {
+    cursor: pointer; /* Makes the emoji look clickable */
+    font-size: 1.8rem; /* Adjusts the size of the emoji */
+    margin-top: 5px; /* Aligns emoji with the buttons */
+}
+
+button:hover, #pronounceIcon:hover {
+    transform: scale(1.1); /* Adds a hover effect for interactivity */
+    transition: transform 0.2s; /* Smooth animation for hover */
 }
