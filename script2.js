@@ -72,38 +72,56 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Pronounce icon not found in the DOM.');
   }
 
-  // Updated function to highlight stress considering double letters
+  // Updated function to highlight stress prioritizing primary stress over double letters
   function highlightStressWithDoubleLetters(word, phonemes) {
     const lowerCaseWord = word.toLowerCase();
     const phonemeArray = phonemes.split(' ');
 
     // Find the index of the primary stress phoneme
     let stressIndex = phonemeArray.findIndex(phon => phon.includes('1'));
-    if (stressIndex === -1) return lowerCaseWord; // Return word as-is if no primary stress found
-
+    
+    // If no primary stress found, check for secondary stress
+    if (stressIndex === -1) {
+      stressIndex = phonemeArray.findIndex(phon => phon.includes('2'));
+    }
+    
     // Special override for the word "information"
     if (lowerCaseWord === 'information') {
       stressIndex = 6; // Adjust index for the word "information"
     }
-
-    // Detect consecutive identical letters in the word
-    const doubleLetterIndex = lowerCaseWord.split('').findIndex((char, idx) => {
-      return idx > 0 && lowerCaseWord[idx] === lowerCaseWord[idx - 1]; // Check for two identical letters
-    });
-
-    // Adjust the highlight position if double letters are found
-    if (doubleLetterIndex !== -1) {
-      stressIndex = Math.min(doubleLetterIndex + 1, lowerCaseWord.length - 1); // Move highlight to the next syllable
+    
+    // List of words that should use double letter rule instead of primary stress
+    // Add more words to this list as needed
+    const doubleLetterPriorityWords = ['illusory'];
+    
+    // Only apply double letter rule if the word is in the priority list or no stress was found
+    if (doubleLetterPriorityWords.includes(lowerCaseWord) || stressIndex === -1) {
+      // Detect consecutive identical letters in the word
+      const doubleLetterIndex = lowerCaseWord.split('').findIndex((char, idx) => {
+        return idx > 0 && lowerCaseWord[idx] === lowerCaseWord[idx - 1]; // Check for two identical letters
+      });
+      
+      // Apply double letter rule if found
+      if (doubleLetterIndex !== -1) {
+        stressIndex = Math.min(doubleLetterIndex + 1, lowerCaseWord.length - 1); // Move highlight to the next syllable
+      }
     }
-
-    // Check if stressIndex is valid for the word length
-    if (stressIndex >= lowerCaseWord.length) return lowerCaseWord;
+    
+    // If still no stress index found, return word as-is
+    if (stressIndex === -1) return lowerCaseWord;
+    
+    // Map phoneme index to character index in the word
+    // This is a simplified mapping and might need adjustment for complex words
+    const charIndex = Math.min(stressIndex, lowerCaseWord.length - 1);
+    
+    // Check if charIndex is valid for the word length
+    if (charIndex >= lowerCaseWord.length) return lowerCaseWord;
 
     // Highlight the stressed letter
     return (
-      lowerCaseWord.substring(0, stressIndex) +
-      '[' + lowerCaseWord.charAt(stressIndex).toUpperCase() + ']' +
-      lowerCaseWord.substring(stressIndex + 1)
+      lowerCaseWord.substring(0, charIndex) +
+      '[' + lowerCaseWord.charAt(charIndex).toUpperCase() + ']' +
+      lowerCaseWord.substring(charIndex + 1)
     );
   }
 
