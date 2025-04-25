@@ -1,36 +1,153 @@
+/* General page styling */
 body {
+    background-color: #f2f2f2;
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f9f9f9;
-    padding: 20px;
-}
-
-input, button {
-    font-size: 16px;
-    margin: 10px; /* Keeps consistent margin for inputs and buttons */
-    padding: 5px;
-}
-
-#output {
-    font-weight: bold;
-    color: #4caf50;
-}
-
-/* New styles for spacing and the emoji */
-.form-row {
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Adds space between elements in the row */
-}
-
-#pronounceIcon {
-    cursor: pointer; /* Makes the emoji look clickable */
-    font-size: 1.8rem; /* Adjusts the size of the emoji */
-    margin-top: 5px; /* Aligns emoji with the buttons */
-}
-
-button:hover, #pronounceIcon:hover {
-    transform: scale(1.1); /* Adds a hover effect for interactivity */
-    transition: transform 0.2s; /* Smooth animation for hover */
-}
+    min-height: 100vh;
+  }
+  
+  /* The container (frame) is larger */
+  .container {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  /* Header styling */
+  header h1 {
+    margin: 0;
+    font-size: 3rem;
+    color: #333;
+  }
+  
+  /* Instruction text */
+  .instruction {
+    margin: 20px 0;
+    color: #555;
+    font-size: 1.2rem;
+  }
+  
+  /* Form layout */
+  form {
+    width: 100%;
+  }
+  
+  /* Form rows: input, submit button, translation, etc. */
+  .form-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-row input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 40%;
+    margin-right: 10px;
+  }
+  
+  .form-row button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-row button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Output styling: placed on a row below, 3 times larger */
+  #output {
+    font-size: 3rem;
+    color: #333;
+  }
+  
+  /* Translation styling */
+  #translationOutput {
+    font-size: 1.2rem;
+    color: #555;
+    font-style: italic;
+    margin-top: 5px;
+  }
+  
+  /* Speech recognition button styling */
+  #speechRecognitionBtn {
+    background-color: #ffeb3b;
+    color: #333;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  #speechRecognitionBtn:hover {
+    background-color: #fdd835;
+  }
+  
+  /* Microphone icon */
+  .mic-icon {
+    font-size: 1.5rem;
+  }
+  
+  /* Listening animation */
+  .listening {
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .container {
+      width: 95%;
+      padding: 20px;
+    }
+    
+    header h1 {
+      font-size: 2.5rem;
+    }
+    
+    .form-row input[type="text"] {
+      width: 60%;
+    }
+    
+    #output {
+      font-size: 2.5rem;
+    }
+  }
+  

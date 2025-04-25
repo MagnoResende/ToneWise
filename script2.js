@@ -16,6 +16,146 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle Translate Button Click
   const submitButton = document.getElementById('submitBtn');
   const wordInput = document.getElementById('wordInput'); // Get the input field
+  const translationOutput = document.getElementById('translationOutput'); // Get the translation output element
+
+  // English to Portuguese common word translations
+  const englishToPortuguese = {
+    // Common words
+    'hello': 'olá',
+    'goodbye': 'adeus',
+    'thank you': 'obrigado',
+    'please': 'por favor',
+    'yes': 'sim',
+    'no': 'não',
+    'sorry': 'desculpe',
+    'excuse me': 'com licença',
+    'good morning': 'bom dia',
+    'good afternoon': 'boa tarde',
+    'good evening': 'boa noite',
+    'good night': 'boa noite',
+    'how are you': 'como está',
+    'fine': 'bem',
+    'happy': 'feliz',
+    'sad': 'triste',
+    'angry': 'zangado',
+    'tired': 'cansado',
+    'hungry': 'com fome',
+    'thirsty': 'com sede',
+    'hot': 'quente',
+    'cold': 'frio',
+    'big': 'grande',
+    'small': 'pequeno',
+    'fast': 'rápido',
+    'slow': 'lento',
+    'easy': 'fácil',
+    'difficult': 'difícil',
+    'good': 'bom',
+    'bad': 'mau',
+    'new': 'novo',
+    'old': 'velho',
+    'beautiful': 'bonito',
+    'ugly': 'feio',
+    'expensive': 'caro',
+    'cheap': 'barato',
+    'open': 'aberto',
+    'closed': 'fechado',
+    'full': 'cheio',
+    'empty': 'vazio',
+    'clean': 'limpo',
+    'dirty': 'sujo',
+    'right': 'direito',
+    'left': 'esquerdo',
+    'up': 'para cima',
+    'down': 'para baixo',
+    'in': 'dentro',
+    'out': 'fora',
+    'here': 'aqui',
+    'there': 'ali',
+    'today': 'hoje',
+    'tomorrow': 'amanhã',
+    'yesterday': 'ontem',
+    'now': 'agora',
+    'later': 'mais tarde',
+    'always': 'sempre',
+    'never': 'nunca',
+    'sometimes': 'às vezes',
+    'often': 'frequentemente',
+    'rarely': 'raramente',
+    'water': 'água',
+    'food': 'comida',
+    'house': 'casa',
+    'car': 'carro',
+    'book': 'livro',
+    'pen': 'caneta',
+    'paper': 'papel',
+    'money': 'dinheiro',
+    'time': 'tempo',
+    'day': 'dia',
+    'night': 'noite',
+    'week': 'semana',
+    'month': 'mês',
+    'year': 'ano',
+    'family': 'família',
+    'friend': 'amigo',
+    'work': 'trabalho',
+    'school': 'escola',
+    'home': 'casa',
+    'office': 'escritório',
+    'store': 'loja',
+    'restaurant': 'restaurante',
+    'hospital': 'hospital',
+    'doctor': 'médico',
+    'teacher': 'professor',
+    'student': 'estudante',
+    'child': 'criança',
+    'man': 'homem',
+    'woman': 'mulher',
+    'boy': 'menino',
+    'girl': 'menina',
+    'love': 'amor',
+    'hate': 'ódio',
+    'life': 'vida',
+    'death': 'morte',
+    'health': 'saúde',
+    'sickness': 'doença',
+    'pain': 'dor',
+    'pleasure': 'prazer',
+    'happiness': 'felicidade',
+    'sadness': 'tristeza',
+    'anger': 'raiva',
+    'fear': 'medo',
+    'hope': 'esperança',
+    'dream': 'sonho',
+    'reality': 'realidade',
+    'truth': 'verdade',
+    'lie': 'mentira',
+    'problem': 'problema',
+    'solution': 'solução',
+    'question': 'pergunta',
+    'answer': 'resposta',
+    'beginning': 'começo',
+    'end': 'fim',
+    'success': 'sucesso',
+    'failure': 'fracasso',
+    'help': 'ajuda',
+    'information': 'informação',
+    'illusory': 'ilusório',
+    'illusive': 'ilusivo'
+  };
+
+  // Function to translate English to Portuguese
+  function translateToPortuguese(word) {
+    const lowerWord = word.toLowerCase();
+    
+    // Check if we have a direct translation
+    if (englishToPortuguese[lowerWord]) {
+      return englishToPortuguese[lowerWord];
+    }
+    
+    // If no direct translation, try to use a translation API
+    // For this implementation, we'll use a fallback message
+    return `Tradução não disponível para "${word}"`;
+  }
 
   const processWord = () => {
     const word = wordInput.value.trim();
@@ -27,6 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const upperWord = word.toUpperCase();
+
+    // Get Portuguese translation
+    const translation = translateToPortuguese(word);
+    translationOutput.textContent = translation;
 
     if (cmuDict && cmuDict[upperWord]) {
       const phonemes = cmuDict[upperWord];
@@ -70,6 +214,59 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   } else {
     console.error('Pronounce icon not found in the DOM.');
+  }
+
+  // Handle Speech Recognition Button Click
+  const speechRecognitionBtn = document.getElementById('speechRecognitionBtn');
+  if (speechRecognitionBtn) {
+    speechRecognitionBtn.onclick = () => {
+      startSpeechRecognition();
+    };
+  } else {
+    console.error('Speech recognition button not found in the DOM.');
+  }
+
+  // Function to start speech recognition
+  function startSpeechRecognition() {
+    // Check if the browser supports the Web Speech API
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Your browser does not support speech recognition. Please try Chrome or Edge.');
+      return;
+    }
+
+    // Create a speech recognition instance
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    // Configure the recognition
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    // Add visual feedback when listening
+    speechRecognitionBtn.querySelector('.mic-icon').classList.add('listening');
+
+    // Start listening
+    recognition.start();
+
+    // Handle the results
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      wordInput.value = transcript.trim();
+      processWord(); // Process the recognized word
+    };
+
+    // Handle errors
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+      alert('Speech recognition error: ' + event.error);
+      speechRecognitionBtn.querySelector('.mic-icon').classList.remove('listening');
+    };
+
+    // Clean up when done
+    recognition.onend = () => {
+      speechRecognitionBtn.querySelector('.mic-icon').classList.remove('listening');
+    };
   }
 
   // Updated function to highlight stress prioritizing primary stress over double letters
