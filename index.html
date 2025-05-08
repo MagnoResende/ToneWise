@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToneWise</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ToneWise</h1>
+    </header>
+    <p class="instruction">Type the word to see where the stress is placed.</p>
+    <form id="wordForm">
+      <!-- First row: speech recognition, input and submit button -->
+      <div class="form-row">
+        <button type="button" id="speechRecognitionBtn" title="Speech Recognition">
+          <span class="mic-icon">🎤</span>
+        </button>
+        <input type="text" id="wordInput" placeholder="Enter a word" />
+        <button type="submit" id="submitBtn">Submit</button>
+        <span id="pronounceIcon" style="cursor: pointer; font-size: 1.5rem;">🔊</span>
+      </div>
+      
+      <!-- Translation row: displayed below the input -->
+      <div class="form-row">
+        <div id="translationOutput"></div>
+      </div>
+      
+      <!-- Output row: displayed below the translation -->
+      <div class="form-row">
+        <span id="output"></span>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Script to handle form submission with Enter key -->
+  <script>
+    document.getElementById('wordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('submitBtn').click();
+    });
+  </script>
+
+  <!-- Include your updated script -->
+  <script src="js/script.js"></script>
+</body>
+</html>
